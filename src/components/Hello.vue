@@ -1,0 +1,84 @@
+<template>
+  
+  <div class="hello">
+        <h1>Template List</h1>
+        <table class="table striped">
+          <thead>
+            <tr>
+              <th>Name </th>
+              <th>Version </th>
+              <th>Content </th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr v-for="template in templates">
+                <td>{{ template.name }}</td>
+                <td>{{ template.version }}</td>
+                <td>{{ template.content }}</td>
+                 <td><a :href="'#show/' + template._id" class="btn btn-success">Show</a></td>
+                 <td><a :href="'#edit/' + template._id" class="btn btn-success">Edit</a></td>
+                
+              </tr> 
+          </tbody>
+          
+        </table>
+
+
+        <div class="container">
+           <span class="navbar-text pull-right"><a class="btn btn-primary" href="#new">Add New Template</a></span>
+        </div>
+
+
+      </div>
+</template>
+
+<script>
+export default {
+  name: 'hello',
+  data () {
+    return {
+      'templates': []
+    }
+  },
+  created () {
+    this.fetchData()
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
+  methods: {
+    fetchData () {
+      console.log('fetchdata method')
+
+      this.$http.get('http://localhost:8000/templates').then(response => {
+
+        // get body data
+        this.templates = response.body;
+
+      }, response => {
+        // error callback
+      });
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h1, h2 {
+  font-weight: normal;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+
+</style>
