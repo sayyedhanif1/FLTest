@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
+import Home from '@/components/Home'
 import CreateTpl from '@/components/CreateTpl'
 import Show from '@/components/Show'
 
@@ -11,7 +12,7 @@ export default new Router({
     {
       path: '/',
       name: 'hello',
-      component: Hello
+      component: Home
     },
     {
       path: '/new',

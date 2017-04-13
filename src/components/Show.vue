@@ -1,5 +1,4 @@
-<template>
-  
+<template>  
   <div class="new">
         <h1>Template Detail</h1>
       <table class="table striped">
@@ -24,64 +23,55 @@
         </tbody>
 
       </table>
-        
-
-
-      </div>
+    </div>
 </template>
 
 <script>
-export default {
-  name: 'new',
-  data () {
-    return {
-      'template': {}
+    export default {
+      	name: 'new',
+		data () {
+			return {
+				'template': {}
+			}
+		},
+
+		created: function() {
+			this.fetchData();
+		},
+		// watch: {
+		//   '$route': 'fetchData'
+		// },
+		methods: {
+			fetchData (params) {
+				this.$http.get('http://localhost:8000/templates/'+ this.$route.params.id).then(response => {
+						// get body data
+						this.template = response.body;
+
+					}, response => {
+						// error callback
+				});			
+			}
+		}
     }
-  },
-
-  created: function() {
-    console.log('inside created')
-      console.log(this.$route.params)
-        this.fetchData();
-    },
-  // watch: {
-  //   '$route': 'fetchData'
-  // },
-  methods: {
-    fetchData (params) {
-      console.log('inside fetchdata')
-
-      this.$http.get('http://localhost:8000/templates/'+ this.$route.params.id).then(response => {
-            // get body data
-            this.template = response.body;
-
-          }, response => {
-            // error callback
-       });
-
-      
-    }
-  }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
+  h1, h2 {
+    font-weight: normal;
+  }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
 
-a {
-  color: #42b983;
-}
+  a {
+    color: #42b983;
+  }
 </style>
