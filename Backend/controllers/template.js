@@ -6,7 +6,6 @@ var mongoose = require('mongoose');
 var Template = require('../model/template')
 
 exports.create = function(req, res){
-    console.log("create api get called")
     var template = new Template(req.payload);
 
     template.save(function(err,template){

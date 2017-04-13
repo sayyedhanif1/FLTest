@@ -1,61 +1,49 @@
-
 const Hapi = require('hapi');
 const Path = require('path');
 const Inert = require('inert');
 var mongoose = require("mongoose");
 
-
 var homeController = require('./controllers');
 var config = require('./config');
 var templateController = require('./controllers/template');
 
+// connnect mongoDB database
 mongoose.connect(config.dbUrl);
 
-// Create a server with a host and port
+// Create a server
 const server = new Hapi.Server({
     connections: {
-        routes: {
-            files: {
-                relativeTo: Path.join(__dirname, 'public')
-            },
+        routes: {            
             cors: true
         }
     }
 });
+
 server.connection({ 
     host: 'localhost', 
-    port: 8000
-
-    
+    port: 8000    
 });
-
-
 
 server.register(Inert, () => {});
 
-
-
+// setup for views engine for html page rendering
 server.register(require('vision'), (err) => {
-
-    // Hoek.assert(!err, err);
-
     server.views({
         engines: {
             html: require('ejs')
         },
         relativeTo: __dirname,
-        path: 'views',
-        helpersPath : 'public'
+        path: 'views'
     });
 });
 
-
+// setup for public js/image/css file
 server.route({
     method: 'GET',
     path: '/{param*}',
     handler: {
         directory: {
-            path: '.',
+            path: Path.join(__dirname, 'public'),
             redirectToSlash: true,
             index: true
         }
@@ -63,22 +51,14 @@ server.route({
 });
 
 
-// Add the route
+// Render html file for home route
 server.route({
     method: 'GET',
     path:'/', 
     handler:  {
     	view: 'angular'
-        // return reply('hello world');
-    },
-    config: {
-        cors: {
-            origin: ['*'],
-            additionalHeaders: ['cache-control', 'x-requested-with']
-        }
-    },
+    }
 });
-
 
 
 
@@ -91,13 +71,7 @@ server.route({
 server.route({
     method: 'POST',
     path:'/templates', 
-    handler:  templateController.create,
-    config: {
-        cors: {
-            origin: ['*'],
-            additionalHeaders: ['cache-control', 'x-requested-with']
-        }
-    }
+    handler:  templateController.create
 });
 
 server.route({
@@ -125,5 +99,5 @@ server.start((err) => {
     if (err) {
         throw err;
     }
-    console.log('Server running at: 8000');
+    console.log('Server running at: ', server.info.uri);
 });
