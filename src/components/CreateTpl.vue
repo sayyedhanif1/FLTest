@@ -86,12 +86,17 @@
 					});
 				}else{		
 					console.log('creating tempale')			
-					this.ajaxRequest = true;
-					this.$http.post('http://localhost:8000/templates/', this.template, function (data, status, request) {
-						console.log(data)
-						this.postResults = data;
-						this.ajaxRequest = false;
-						this.$router.push('/') 
+					// this.ajaxRequest = true;
+					this.$http.post('http://localhost:8000/templates', this.template).then(response => {
+							// get body data
+							console.log("success respone ")
+							this.template = response.body;
+							this.$router.push('/') 
+
+						}, response => {
+							console.log("error respone ")
+							console.log(response)
+							// error callback
 					});			
 				}			
 			}
