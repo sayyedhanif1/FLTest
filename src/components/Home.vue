@@ -1,7 +1,7 @@
 <template>  
-  <div class="hello">
+  <div class="container">
         <h1>Template List</h1>
-        <table class="table striped">
+        <table class="table">
           <thead>
             <tr>
               <th>Name </th>
@@ -15,11 +15,11 @@
                 <td>{{ template.name }}</td>
                 <td>{{ template.version }}</td>
                 <td>{{ template.content }}</td>
-                 <td><a :href="'#show/' + template._id" class="btn btn-success">Show</a>
+                <td>
+				  <a :href="'#show/' + template._id" class="btn btn-success">Show</a>
                   <a :href="'#edit/' + template._id" class="btn btn-primary">Edit</a>
                   <a v-on:click="delTemplate(template._id)" class="btn btn-danger">Delete</a>
-                 </td>
-                
+                 </td>                
               </tr> 
           </tbody>          
         </table>
