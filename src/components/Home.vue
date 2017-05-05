@@ -1,7 +1,7 @@
 <template>  
   <div class="container">
         <h1>Template List</h1>
-        <table class="table">
+        <table class="table stripped">
           <thead>
             <tr>
               <th>Name </th>
@@ -46,7 +46,7 @@
 		methods: {
 			fetchData () {
 				this.$http.get('http://localhost:8000/templates').then(response => {
-
+						// success callback
 						// get body data
 						this.templates = response.body;
 
